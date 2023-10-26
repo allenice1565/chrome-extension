@@ -1,30 +1,26 @@
-// chrome.runtime.sendMessage({ key:'hello' })
-    // try{
-    // chrome.tabs.query({active: true,currentWindow: true}, tabs => {
-    //     let tab = tabs[0];
-    //     chrome.tabs.sendMessage(tab.id, "start");
-    // });}catch(e){}
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     console.log('req', request);
-// });
-// setInterval(()=>{
-//     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-//             chrome.tabs.sendMessage(tabs[0].id, {greeting: "您好"}, function(response) {
-//                 console.log(response.farewell);
-//         });
-        
-//       });
-//       console.log(99)
-// },1000)
-setInterval(()=>{
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        // if (changeInfo.url) {
-            // matchWebsite(changeInfo, tabId);
-            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, changeInfo, function(response) {
-                    console.log(response.farewell);
-                })
-            })
+/** 处理状态刷新 */
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+    if (!changeInfo.url) return
+    const [currentTab] = await chrome.tabs.query({
+        active: true,
+        status: 'complete',
     })
-        // });
-},1000)
+    if (!currentTab) return
+    const response = await chrome.tabs.sendMessage(tabId, {
+        text: '这是background.js向content.js发送的一条信息',
+    })
+    console.log('background收到响应', response)
+})
+
+/** 处理tab跳转 */
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
+    const [currentTab] = await chrome.tabs.query({
+        active: true,
+        status: 'complete',
+    })
+    if (!currentTab) return
+    const response = await chrome.tabs.sendMessage(activeInfo.tabId, {
+        text: 'onActivated事件已捕获',
+    })
+    console.log('onActivated事件已捕获收到响应', response)
+})

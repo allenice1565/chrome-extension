@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "auto-login",
-    "description": "开发过程各个网站自动登录。",
+    "description": "开发过程各个网站自动登录",
     "version": "1.0",
     "permissions": ["activeTab", "contextMenus", "storage", "tabs"],
     "action": {
