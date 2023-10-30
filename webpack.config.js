@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -48,4 +47,4 @@ module.exports = {
             chunks: ['backendManagement'], //代表指定的入口文件是哪个)
         }),
     ],
-};
+}
