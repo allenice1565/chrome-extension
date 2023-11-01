@@ -6,10 +6,14 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         status: 'complete',
     })
     if (!currentTab) return
-    const response = await chrome.tabs.sendMessage(tabId, {
-        text: '这是background.js向content.js发送的一条信息',
-    })
-    console.log('background收到响应', response)
+    try {
+        const response = await chrome.tabs.sendMessage(tabId, {
+            text: '这是background.js向content.js发送的一条信息',
+        })
+        console.log('background收到响应', response)
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 /** 处理tab跳转 */
@@ -19,8 +23,12 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
         status: 'complete',
     })
     if (!currentTab) return
-    const response = await chrome.tabs.sendMessage(activeInfo.tabId, {
-        text: 'onActivated事件已捕获',
-    })
-    console.log('onActivated事件已捕获收到响应', response)
+    try {
+        const response = await chrome.tabs.sendMessage(activeInfo.tabId, {
+            text: 'onActivated事件已捕获',
+        })
+        console.log('onActivated事件已捕获收到响应', response)
+    } catch (e) {
+        console.log(e)
+    }
 })
