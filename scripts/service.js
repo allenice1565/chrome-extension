@@ -1,3 +1,9 @@
+const API = {
+    openTab: (url) => {
+        chrome.tabs.create({ url })
+    },
+}
+
 /** 处理状态刷新 */
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (!changeInfo.url) return
@@ -32,3 +38,11 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
         console.log(e)
     }
 })
+
+/** 处理消息 */
+chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
+    API[message.api]?.(message.data)
+    sendResponse({ farewell: '关闭' })
+})
+
+console.log('chrome-extension')
