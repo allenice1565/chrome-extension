@@ -13,14 +13,22 @@ export default defineConfig({
             plugins: [tailwindcss(), autoprefixer()],
         },
     },
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, './src'),
+            '@pages': resolve(__dirname, './src/pages'),
+            '@store': resolve(__dirname, './src/store'),
+            '@utils': resolve(__dirname, './src/utils'),
+        },
+    },
     server: {
         port: 10000,
     },
     build: {
         rollupOptions: {
             input: {
-                background: resolve(__dirname, './src/background.html'),
-                popup: resolve(__dirname, './src/popup.html'),
+                background: resolve(__dirname, './background.html'),
+                popup: resolve(__dirname, './popup.html'),
             },
         },
     },
