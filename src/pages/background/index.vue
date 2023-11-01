@@ -16,6 +16,12 @@ import {
     Breadcrumb,
     BreadcrumbItem,
 } from 'ant-design-vue'
+import { DBTableMap, setTable, getTable } from '@/utils/storage'
+
+setTable(DBTableMap.websiteTable, [1, 3]).then(async () =>
+    console.log(await getTable(DBTableMap.websiteTable))
+)
+
 const selectedKeys1 = ref<string[]>(['2'])
 const selectedKeys2 = ref<string[]>(['1'])
 const openKeys = ref<string[]>(['sub1'])
