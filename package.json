@@ -45,7 +45,8 @@
         "lodash": "^4.17.21",
         "nanoid": "^4.0.2",
         "reset-css": "^5.0.2",
-        "vue": "^3.3.7"
+        "vue": "^3.3.7",
+        "vue-router": "^4.2.5"
     },
     "lint-staged": {
         "*.js, *.ts, *.vue, *.jsx, *.tsx": [

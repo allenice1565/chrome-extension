@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import {
     UserOutlined,
     LaptopOutlined,
@@ -21,10 +22,30 @@ import { DBTableMap, setTable, getTable } from '@/utils/storage'
 setTable(DBTableMap.websiteTable, [1, 3]).then(async () =>
     console.log(await getTable(DBTableMap.websiteTable))
 )
-
-const selectedKeys1 = ref<string[]>(['2'])
+const currentNav = ref<number[]>([0])
 const selectedKeys2 = ref<string[]>(['1'])
 const openKeys = ref<string[]>(['sub1'])
+const navigationList: Array<{
+    id: number
+    name: string
+    path: string
+}> = [
+    {
+        id: 0,
+        name: '网站管理',
+        path: '/website',
+    },
+    {
+        id: 1,
+        name: '账号管理',
+        path: '/account',
+    },
+    {
+        id: 2,
+        name: '操作管理',
+        path: '/action',
+    },
+]
 </script>
 
 <template>
@@ -32,14 +53,18 @@ const openKeys = ref<string[]>(['sub1'])
         <layout-header class="header">
             <div class="logo" />
             <Menu
-                v-model:selectedKeys="selectedKeys1"
+                v-model:selectedKeys="currentNav"
                 theme="dark"
                 mode="horizontal"
                 :style="{ lineHeight: '64px' }"
             >
-                <menu-item key="1">nav 1</menu-item>
-                <menu-item key="2">nav 2</menu-item>
-                <menu-item key="3">nav 3</menu-item>
+                <router-link
+                    v-for="item in navigationList"
+                    :key="item.id"
+                    :to="item.path"
+                >
+                    <menu-item :key="item.id">{{ item.name }}</menu-item>
+                </router-link>
             </Menu>
         </layout-header>
         <layout>
@@ -102,7 +127,7 @@ const openKeys = ref<string[]>(['sub1'])
                         minHeight: '280px',
                     }"
                 >
-                    Content
+                    <RouterView />
                 </layout-content>
             </layout>
         </layout>
