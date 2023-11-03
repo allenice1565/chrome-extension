@@ -4,7 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite serve .",
         "build": "vite build",
         "my-linter-scan": "my-linter scan",
         "my-linter-fix": "my-linter fix",

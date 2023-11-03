@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import {
     UserOutlined,
     LaptopOutlined,
@@ -125,6 +124,7 @@ const navigationList: Array<{
                         padding: '24px',
                         margin: 0,
                         minHeight: '280px',
+                        height: '100%',
                     }"
                 >
                     <RouterView />

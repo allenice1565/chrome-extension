@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import 'reset-css'
+import '@/assets/css/main.css'
 import 'ant-design-vue/dist/reset.css'
 import {
     type RouteRecordRaw,
