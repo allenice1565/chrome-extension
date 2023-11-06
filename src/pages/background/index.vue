@@ -67,7 +67,7 @@ const navigationList: Array<{
             </Menu>
         </layout-header>
         <layout>
-            <layout-sider width="200" style="background: #fff">
+            <!-- <layout-sider width="200" style="background: #fff">
                 <Menu
                     v-model:selectedKeys="selectedKeys2"
                     v-model:openKeys="openKeys"
@@ -111,13 +111,13 @@ const navigationList: Array<{
                         <menu-item key="12">option12</menu-item>
                     </sub-menu>
                 </Menu>
-            </layout-sider>
+            </layout-sider> -->
             <layout style="padding: 0 24px 24px">
-                <breadcrumb style="margin: 16px 0">
+                <!-- <breadcrumb style="margin: 16px 0">
                     <breadcrumb-item>Home</breadcrumb-item>
                     <breadcrumb-item>List</breadcrumb-item>
                     <breadcrumb-item>App</breadcrumb-item>
-                </breadcrumb>
+                </breadcrumb> -->
                 <layout-content
                     :style="{
                         background: '#fff',

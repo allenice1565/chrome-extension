@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import { Button, Table } from 'ant-design-vue'
+import { Button, Table, Input } from 'ant-design-vue'
 import { ref } from 'vue'
-import { FormOutlined, DeleteOutlined } from '@ant-design/icons-vue'
-const dataSource = [
+import {
+    CheckCircleOutlined,
+    FormOutlined,
+    DeleteOutlined,
+} from '@ant-design/icons-vue'
+const dataSource: Array<{
+    key: string
+    name: string
+    address: string
+    account: Array<string>
+}> = [
     {
         key: '123132',
         name: '沙盒',
@@ -16,41 +25,61 @@ const dataSource = [
         account: [],
     },
 ]
-
-const columns = [
+interface IColumn {
+    title: string
+    dataIndex: string
+    editing: boolean
+    width?: number
+    align?: 'left' | 'center' | 'right'
+    enable?: boolean
+}
+const columns: IColumn[] = [
     {
         title: '操作',
         dataIndex: 'operation',
         width: 80,
         align: 'center',
+        editing: false,
+        enable: true,
     },
     {
         title: 'ID',
         dataIndex: 'key',
         width: 80,
+        editing: false,
+        enable: true,
     },
     {
         title: '名称',
         dataIndex: 'name',
         width: 120,
+        editing: false,
+        enable: true,
     },
     {
         title: '匹配网址',
         dataIndex: 'address',
         key: 'address',
         ellipsis: true,
+        editing: false,
+        enable: true,
     },
     {
         title: '账号',
         dataIndex: 'account',
         key: 'account',
         ellipsis: true,
+        editing: false,
+        enable: true,
     },
 ]
 
-const selectedRowKeys = ref([])
-const onSelectChange = (keys) => {
+const selectedRowKeys = ref<string[]>([])
+const onSelectChange = (keys: string[]) => {
     selectedRowKeys.value = keys
+}
+const handleSave = (record: IColumn) => {
+    record.editing = false
 }
 </script>
 <template>
@@ -77,13 +106,47 @@ const onSelectChange = (keys) => {
                     <div
                         class="relative flex items-center w-full justify-center"
                     >
+                        <CheckCircleOutlined
+                            v-if="record.editing"
+                            class="mr-[8px] text-[18px] text-[green] cursor-pointer"
+                            @click.stop="handleSave(record)"
+                        />
                         <FormOutlined
+                            v-else
                             class="mr-[8px] text-[18px] text-[blue] cursor-pointer"
+                            @click.stop="record.editing = true"
                         />
                         <DeleteOutlined
                             class="text-[18px] text-[red] cursor-pointer"
                         />
                     </div>
+                </template>
+                <template v-if="column.dataIndex === 'name'">
+                    <div
+                        v-if="record.editing"
+                        class="relative flex items-center w-full justify-center"
+                    >
+                        <Input v-model="record.name" type="text" />
+                    </div>
+                    <div v-else>{{ text }}</div>
+                </template>
+                <template v-if="column.dataIndex === 'address'">
+                    <div
+                        v-if="record.editing"
+                        class="relative flex items-center w-full justify-center"
+                    >
+                        <Input v-model="record.address" type="text" />
+                    </div>
+                    <div v-else>{{ text }}</div>
+                </template>
+                <template v-if="column.dataIndex === 'account'">
+                    <div
+                        v-if="record.editing"
+                        class="relative flex items-center w-full justify-center"
+                    >
+                        <Input type="text" />
+                    </div>
+                    <div v-else>{{ text }}</div>
                 </template>
             </template>
         </Table>
