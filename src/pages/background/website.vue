@@ -6,12 +6,15 @@ import {
     FormOutlined,
     DeleteOutlined,
 } from '@ant-design/icons-vue'
-const dataSource: Array<{
-    key: string
-    name: string
-    address: string
-    account: Array<string>
-}> = [
+
+const dataSource = ref<
+    Array<{
+        key: string
+        name: string
+        address: string
+        account: Array<string>
+    }>
+>([
     {
         key: '123132',
         name: '沙盒',
@@ -24,7 +27,8 @@ const dataSource: Array<{
         address: 'http://zyfp-fof.ss.gofund.cn/accountManager/userManager',
         account: [],
     },
-]
+])
+
 interface IColumn {
     title: string
     dataIndex: string
@@ -32,6 +36,8 @@ interface IColumn {
     width?: number
     align?: 'left' | 'center' | 'right'
     enable?: boolean
+    key?: string
+    ellipsis?: boolean
 }
 const columns: IColumn[] = [
     {
@@ -81,6 +87,12 @@ const onSelectChange = (keys: string[]) => {
 const handleSave = (record: IColumn) => {
     record.editing = false
 }
+
+// const handleInput = (val: string, record: any) => {
+//     console.log(val)
+//     record.address = val
+//     // dataSource.value = [...dataSource.value]
+// }
 </script>
 <template>
     <div class="h-full">
@@ -126,7 +138,7 @@ const handleSave = (record: IColumn) => {
                         v-if="record.editing"
                         class="relative flex items-center w-full justify-center"
                     >
-                        <Input v-model="record.name" type="text" />
+                        <Input v-model:value="record.name" type="text" />
                     </div>
                     <div v-else>{{ text }}</div>
                 </template>
@@ -135,7 +147,7 @@ const handleSave = (record: IColumn) => {
                         v-if="record.editing"
                         class="relative flex items-center w-full justify-center"
                     >
-                        <Input v-model="record.address" type="text" />
+                        <Input v-model:value="record.address" type="text" />
                     </div>
                     <div v-else>{{ text }}</div>
                 </template>

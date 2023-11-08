@@ -39,11 +39,11 @@ const navigationList: Array<{
         name: '账号管理',
         path: '/account',
     },
-    {
-        id: 2,
-        name: '操作管理',
-        path: '/action',
-    },
+    // {
+    //     id: 2,
+    //     name: '操作管理',
+    //     path: '/action',
+    // },
 ]
 </script>
 
