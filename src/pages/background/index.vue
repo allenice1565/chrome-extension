@@ -18,6 +18,10 @@ import {
 } from 'ant-design-vue'
 import { DBTableMap, setTable, getTable } from '@/utils/storage'
 
+defineOptions({
+    name: 'ManagementIndex',
+})
+
 setTable(DBTableMap.websiteTable, [1, 3]).then(async () =>
     console.log(await getTable(DBTableMap.websiteTable))
 )

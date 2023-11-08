@@ -7,6 +7,10 @@ import {
     DeleteOutlined,
 } from '@ant-design/icons-vue'
 
+defineOptions({
+    name: 'WebsiteManagement',
+})
+
 const dataSource = ref<
     Array<{
         key: string
