@@ -1,35 +1,42 @@
 <script setup lang="ts">
-import { Button, Table, Input } from 'ant-design-vue'
+import { Button, Table, Input, Tag } from 'ant-design-vue'
 import { ref } from 'vue'
 import {
     CheckCircleOutlined,
     FormOutlined,
     DeleteOutlined,
 } from '@ant-design/icons-vue'
+import { IWebsite, IAccount } from '@/interface'
 
 defineOptions({
     name: 'WebsiteManagement',
 })
 
-const dataSource = ref<
-    Array<{
-        key: string
-        name: string
-        address: string
-        account: Array<string>
-    }>
->([
+const dataSource = ref<IWebsite[]>([
     {
         key: '123132',
         name: '沙盒',
         address: 'http://zyfp-fof.ss.gofund.cn',
-        account: [],
+        accountList: [
+            {
+                key: '1231111',
+                name: '80',
+                account: 'test000000080',
+                pwd: 'cx1111',
+            },
+            {
+                key: '1231112',
+                name: '81',
+                account: 'test000000081',
+                pwd: 'cx1111',
+            },
+        ],
     },
     {
         key: '123123',
         name: '广发落地版',
         address: 'http://zyfp-fof.ss.gofund.cn/accountManager/userManager',
-        account: [],
+        accountList: [],
     },
 ])
 
@@ -76,8 +83,8 @@ const columns: IColumn[] = [
     },
     {
         title: '账号',
-        dataIndex: 'account',
-        key: 'account',
+        dataIndex: 'accountList',
+        key: 'accountList',
         ellipsis: true,
         editing: false,
         enable: true,
@@ -92,6 +99,9 @@ const handleSave = (record: IColumn) => {
     record.editing = false
 }
 
+const handleDeleteAccount = (e) => {
+    console.log(e)
+}
 // const handleInput = (val: string, record: any) => {
 //     console.log(val)
 //     record.address = val
@@ -144,7 +154,13 @@ const handleSave = (record: IColumn) => {
                     >
                         <Input v-model:value="record.name" type="text" />
                     </div>
-                    <div v-else>{{ text }}</div>
+                    <div
+                        v-else
+                        class="overflow-hidden text-ellipsis"
+                        :title="text"
+                    >
+                        {{ text }}
+                    </div>
                 </template>
                 <template v-if="column.dataIndex === 'address'">
                     <div
@@ -153,16 +169,35 @@ const handleSave = (record: IColumn) => {
                     >
                         <Input v-model:value="record.address" type="text" />
                     </div>
-                    <div v-else>{{ text }}</div>
-                </template>
-                <template v-if="column.dataIndex === 'account'">
                     <div
+                        v-else
+                        class="overflow-hidden vtext-ellipsis"
+                        :title="text"
+                    >
+                        {{ text }}
+                    </div>
+                </template>
+                <template v-if="column.dataIndex === 'accountList'">
+                    <!-- <div
                         v-if="record.editing"
                         class="relative flex items-center w-full justify-center"
                     >
                         <Input type="text" />
-                    </div>
-                    <div v-else>{{ text }}</div>
+                    </div> -->
+                    <!-- <template v-else> -->
+                    <Tag
+                        v-for="item in text"
+                        :key="item.key"
+                        :bordered="false"
+                        :closable="record.editing"
+                        :title="item.account"
+                        @close="handleDeleteAccount(item)"
+                        >{{ item.name }}</Tag
+                    >
+                    <!-- </template> -->
+                    <!-- <div class="overflow-hidden text-ellipsis" :title="text">
+                        {{ text.map((item: IAccount) => item.name).join(',') }}
+                    </div> -->
                 </template>
             </template>
         </Table>
@@ -174,5 +209,6 @@ const handleSave = (record: IColumn) => {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: default;
 }
 </style>
